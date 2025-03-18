@@ -1,0 +1,46 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100vw;
+    min-height: 100vh;
+    max-width:100%;
+}
+
+main {
+    padding: 6rem 3.5rem;
+    width: 100%;
+    height: 100%;
+}
+
+#alternatives-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    height: 100%;
+    gap: 1rem;
+}
+
+.alternative-btn {
+    width: 100%;
+    padding: 30px;
+    border-color: red;
+    border-radius: 10px;
+}
+
+#dialog-result {
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    border: none;
+    border-radius: 10px;
+    background-color: #FFF;
+}
