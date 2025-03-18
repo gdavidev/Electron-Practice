@@ -1,37 +1,37 @@
 {
   "data": [
     {
-      "question": "Qual é o maior mamífero do mundo?",
+      "title": "Qual é o maior mamífero do mundo?",
       "alternatives": ["Elefante Africano", "Baleia Azul", "Tubarão Branco", "Girafa"],
       "answer": "Baleia Azul"
     },
     {
-      "question": "Qual animal é conhecido por ter uma memória excelente?",
+      "title": "Qual animal é conhecido por ter uma memória excelente?",
       "alternatives": ["Golfinho", "Elefante", "Corvo", "Chimpanzé"],
       "answer": "Elefante"
     },
     {
-      "question": "Qual destes animais é um marsupial?",
+      "title": "Qual destes animais é um marsupial?",
       "alternatives": ["Canguru", "Leão", "Tigre", "Urso"],
       "answer": "Canguru"
     },
     {
-      "question": "Qual é o único mamífero capaz de voar?",
+      "title": "Qual é o único mamífero capaz de voar?",
       "alternatives": ["Morcego", "Águia", "Esquilo Voador", "Pinguim"],
       "answer": "Morcego"
     },
     {
-      "question": "Qual animal é conhecido por dormir de cabeça para baixo?",
+      "title": "Qual animal é conhecido por dormir de cabeça para baixo?",
       "alternatives": ["Preguiça", "Morcego", "Coruja", "Gato"],
       "answer": "Morcego"
     },
     {
-      "question": "Qual destes animais é mais rápido em terra?",
+      "title": "Qual destes animais é mais rápido em terra?",
       "alternatives": ["Guepardo", "Leão", "Cavalo", "Cão"],
       "answer": "Guepardo"
     },
     {
-      "question": "Qual animal é conhecido por mudar de cor para se camuflar?",
+      "title": "Qual animal é conhecido por mudar de cor para se camuflar?",
       "alternatives": ["Camaleão", "Polvo", "Lagarto", "Sapo"],
       "answer": "Camaleão"
     }

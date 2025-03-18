@@ -10,6 +10,22 @@ body {
     max-width:100%;
 }
 
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#title-container {
+    flex: 1;
+}
+
+#score-container {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: nowrap;
+}
+
 main {
     padding: 6rem 3.5rem;
     width: 100%;

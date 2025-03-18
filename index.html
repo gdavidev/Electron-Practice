@@ -8,8 +8,15 @@
 </head>
 <body>
 <header>
-  <h1>QUIZ</h1>
-  <h2 id="question"></h2>
+  <div id="title-container">
+    <h1>QUIZ</h1>
+    <h2 id="question"></h2>
+  </div>
+  <div id="score-container">
+    <span id="score">0</span>
+    <span>/</span>
+    <span id="max-score">0</span>
+  </div>
 </header>
 <main>
   <div id="alternatives-container">
@@ -20,6 +27,6 @@
     <button id="next-button">Proxima</button>
   </dialog>
 </main>
-<script src="renderer.js"></script>
+<script type="module" src="renderer.js"></script>
 </body>
 </html>
