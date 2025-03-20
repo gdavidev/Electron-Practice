@@ -6,7 +6,7 @@ class PageContent {
   dialogMessageElement = document.getElementById('result-message');
   dialog = document.getElementById('dialog-result');
   nextQuestionButton = document.getElementById('next-button');
-  alternativesContainer = document.getElementById('alternatives-container');
+  alternativesButtonsArr = document.getElementsByClassName('alternative-btn');
   scoreElement = document.getElementById('score');
   maxScoreElement = document.getElementById('max-score');
   
@@ -14,8 +14,12 @@ class PageContent {
   maxScore = 0;
   
   loadAlternatives(alternatives, answer) {
-    const buttons = alternatives.map(a => createAlternativeButton(a, a === answer))
-    replaceChildren(this.alternativesContainer, buttons);
+    for (let i = 0; i < this.alternativesButtonsArr.length; i++) {
+      const isCorrect = alternatives[i] === answer
+
+      this.alternativesButtonsArr[i].textContent = alternatives[i];
+      this.alternativesButtonsArr[i].onclick = () => this.showDialogResult(isCorrect);
+    }
   }
   
   setScore(score) {
@@ -36,7 +40,13 @@ class PageContent {
     this.dialogMessageElement.textContent = text;
   }
   
-  showDialog() {
+  showDialogResult(isCorrect) {
+    if (isCorrect) {
+      this.setDialogText("Você acertou!");
+      this.setScore(this.score + 1);
+    } else {
+      this.setDialogText("Você errou!");
+    }
     this.dialog.style.display = 'block';
   }
   
@@ -53,13 +63,14 @@ let pageContent;
 window.bridge.onJsonData((event, data) => {
   pageContent = new PageContent();
   
-  const shuffledQuestions = shuffleQuestions(data)
-  initializePage(shuffledQuestions);
+  const shuffledQuestions = shuffleQuestions(data);
+  const chosenQuestions = shuffledQuestions.slice(0, 5);
+  initializePage(chosenQuestions);
 });
 
 function shuffleQuestions(data) {
   data.forEach(d => { d.alternatives = shuffle(d.alternatives) });
-  return shuffle(data)
+  return shuffle(data);
 }
 
 function initializePage(questionsData) {
@@ -80,21 +91,4 @@ function loadQuestion(question, nextQuestionCallbackFn) {
   pageContent.loadAlternatives(question.alternatives, question.answer);
   pageContent.setQuestionText(question.title);
   pageContent.hideDialog();
-}
-
-function createAlternativeButton(text, isCorrect) {
-  const button = document.createElement('button');
-  button.onclick =  () => {
-    if (isCorrect) {
-      pageContent.setDialogText("Você acertou!");
-      pageContent.setScore(pageContent.score + 1);
-    } else {
-      pageContent.setDialogText("Você errou!");
-    }
-    pageContent.showDialog();
-  }
-  button.classList.add('alternative-btn');
-  button.textContent = text;
-  
-  return button;
 }

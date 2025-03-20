@@ -33,19 +33,36 @@ main {
 }
 
 #alternatives-container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
     align-items: start;
     justify-content: center;
     height: 100%;
     gap: 1rem;
 }
 
+.btn-red {
+    background: #ff0000;
+}
+.btn-blue {
+    background: #0000FF;
+}
+.btn-green {
+    background: #00FF00;
+}
+.btn-yellow {
+    background: #ffff00;
+}
+
 .alternative-btn {
     width: 100%;
     padding: 30px;
-    border-color: red;
     border-radius: 10px;
+    border: none;
+    font-weight: bold;
+    font-size: 1.5rem;
+    font-family: "Arial Black";
 }
 
 #dialog-result {
