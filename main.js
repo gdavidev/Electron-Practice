@@ -21,7 +21,7 @@ const createWindow = () => {
     jsonData = JSON.parse(data);
   });
   
-  //win.removeMenu();
+  win.removeMenu();
   win.loadFile('index.html')
       .then(() => { win.webContents.send('json-data', jsonData.data) })
       .then(() => { win.show() });

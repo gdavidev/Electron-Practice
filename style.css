@@ -1,3 +1,7 @@
+:root {
+    --max-screen-width: 1200px;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -16,11 +20,16 @@ body {
 }
 
 header {
+    padding: 0.5rem 1rem;
+    font-weight: 700;
+}
+
+#header-content-container {
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.5rem 1rem;
-    font-weight: 700;
+    max-width: var(--max-screen-width);
 }
 
 #score-container {
@@ -56,6 +65,9 @@ main #alternatives-container {
     height: 100%;
     gap: 1rem;
     padding: 1.5rem 1rem 1rem 1rem;
+    max-width: var(--max-screen-width);
+    width: 100%;
+    margin: 0 auto;
 }
 
 main #time-bar-container {
