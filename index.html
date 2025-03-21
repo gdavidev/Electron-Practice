@@ -7,6 +7,7 @@
   <title>Hello World!</title>
 </head>
 <body>
+
 <header>
   <div id="score-container">
     Score: <span id="score">0</span>
@@ -17,6 +18,7 @@
     <span id="max-progress">0</span>
   </div>
 </header>
+
 <main>
   <section id="question-container">
     <span id="question-text"></span>
@@ -37,6 +39,19 @@
     <button class="alternative-btn btn-green"></button>
   </section>
 </main>
+
+<dialog id="final-result-dialog">
+  <div id="final-result-dialog-content">
+    <div>
+      <span id="final-result-text"></span>
+      <div>
+        Seu Score: <span id="final-result-score-text"></span>
+      </div>
+    </div>
+    <button id="try-again-button">Tentar Novamente</button>
+  </div>
+</dialog>
+
 <script type="module" src="renderer.js"></script>
 </body>
 </html>

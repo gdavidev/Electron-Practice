@@ -11,15 +11,20 @@ class PageContent {
   resultScoreTextElement = document.getElementById('result-score-text');
   currentQuestionElement = document.getElementById('progress');
   questionAmountElement = document.getElementById('max-progress');
+  finalResultDialogElement = document.getElementById('final-result-dialog');
+  finalResultTextElement = document.getElementById('final-result-text');
+  finalResultScoreElement = document.getElementById('final-result-score-text');
+  tryAgainButtonElement = document.getElementById('try-again-button');
   
   // Data
+  fullQuestionData = [];
   questions = [];
   
   // Configuration
   scoreMultiplier = 10;
   timePerQuestionMs = 5000;
   timeOnResultsViewMs = 1500;
-  numOfQuestions = 5;
+  numOfQuestions = 1;
   
   // State
   score = 0;
@@ -28,21 +33,34 @@ class PageContent {
   timeBarAnimation = null;
   timeOutRef = null;
   
-  loadPage(data) {
-    const shuffledQuestions = shuffleQuestions(data);
+  constructor(data) {
+    this.fullQuestionData = data;
+  }
+  
+  loadPage() {
+    const shuffledQuestions = shuffleQuestions(this.fullQuestionData.slice());
     this.questions = shuffledQuestions.slice(0, this.numOfQuestions);
+    
+    this.currentQuestion = 0
     this.questionAmountElement.textContent = String(this.questions.length);
     this.currentQuestionElement.textContent = '1';
     this.timeBarAnimation = this.createTimeBarAnimation()
     this.setScore(0);
     
-    this.switchToQuestionView();
-    
     this.loadQuestion(this.questions[0]);
+    this.switchToQuestionView();
+    this.hideFinalResults();
+    
+    this.tryAgainButtonElement.onclick = () => { this.loadPage(); }
   }
   
   nextQuestion() {
     this.currentQuestion++;
+    if (this.currentQuestion > this.questions.length - 1) {
+      this.endGame();
+      return;
+    }
+    
     this.currentQuestionElement.textContent = String(this.currentQuestion + 1);
     this.loadQuestion(this.questions[this.currentQuestion]);
   }
@@ -65,7 +83,8 @@ class PageContent {
     const isCorrect = this.questions[this.currentQuestion].answer === alternative
     
     if (isCorrect) {
-      const scoreGained = (Date.now() - this.timeWhenStarted) * this.scoreMultiplier;
+      const scoreLostDueToTime = Date.now() - this.timeWhenStarted
+      const scoreGained = (this.timePerQuestionMs - scoreLostDueToTime) * this.scoreMultiplier;
       
       this.setScore(this.score + scoreGained);
       this.switchToResultView('correct', scoreGained)
@@ -149,6 +168,41 @@ class PageContent {
     }
   }
   
+  endGame() {
+    this.setAlternativesLocked(true);
+    this.pauseTimer();
+    
+    this.questionTextElement.style.display = 'none';
+    for (let i = 0; i < this.alternativesButtonsArr.length; i++) {
+      this.alternativesButtonsArr[i].textContent = '-------';
+    }
+    
+    this.showFinalResults()
+  }
+  
+  showFinalResults() {
+    const maxScore = this.timePerQuestionMs * this.scoreMultiplier;
+    const scoreRatio = this.score / maxScore;
+    
+    if (scoreRatio >= 0.7) {
+      this.finalResultTextElement.textContent = 'Parabens'
+      this.finalResultTextElement.style.color = 'green'
+    } else if (scoreRatio >= 0.5) {
+      this.finalResultTextElement.textContent = 'Você foi bem'
+      this.finalResultTextElement.style.color = 'orange'
+    } else {
+      this.finalResultTextElement.textContent = 'Mais sorte na próxima'
+      this.finalResultTextElement.style.color = 'red'
+    }
+    
+    this.finalResultDialogElement.style.display = 'block';
+    this.finalResultScoreElement.textContent = String(this.score);
+  }
+  
+  hideFinalResults() {
+    this.finalResultDialogElement.style.display = 'none';
+  }
+  
   setScore(score) {
     this.score = score;
     this.scoreElement.textContent = score;
@@ -165,8 +219,8 @@ let questionsDatabase;
 window.bridge.onJsonData((event, data) => {
   questionsDatabase = data;
   
-  pageContent = new PageContent();
-  pageContent.loadPage(data);
+  pageContent = new PageContent(data);
+  pageContent.loadPage();
 });
 
 function shuffleQuestions(data) {
