@@ -2,22 +2,25 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    color: #140f29;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
     width: 100vw;
     min-height: 100vh;
     max-width:100%;
+    background: #fff1e8;
+    display: flex;
+    flex-direction: column;
 }
 
 header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
-
-#title-container {
-    flex: 1;
+    padding: 0.5rem 1rem;
+    font-weight: 700;
 }
 
 #score-container {
@@ -27,12 +30,24 @@ header {
 }
 
 main {
-    padding: 6rem 3.5rem;
-    width: 100%;
-    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+main #question-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+}
+main #question-container #question-text {
+    color: #140f29;
+    font-weight: 900;
+    font-size: 2rem;
 }
 
-#alternatives-container {
+main #alternatives-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
@@ -40,19 +55,18 @@ main {
     justify-content: center;
     height: 100%;
     gap: 1rem;
+    padding: 1.5rem 1rem 1rem 1rem;
 }
 
-.btn-red {
-    background: #ff0000;
+main #time-bar-container {
+    width: 100%;
+    height: 1.5rem;
+    background: lightgray;
 }
-.btn-blue {
-    background: #0000FF;
-}
-.btn-green {
-    background: #00FF00;
-}
-.btn-yellow {
-    background: #ffff00;
+main #time-bar {
+    background: green;
+    width: 100%;
+    height: 100%;
 }
 
 .alternative-btn {
@@ -63,17 +77,53 @@ main {
     font-weight: bold;
     font-size: 1.5rem;
     font-family: "Arial Black";
+    color: white;
+    box-shadow: #140f29AA 3px 3px 3px;
+}
+.btn-blue {
+    background: #1369ce
+}
+.btn-red {
+    background: #e21c3d
+}
+.btn-yellow {
+    background: #d89e00
+}
+.btn-green {
+    background: #28900d
 }
 
-#dialog-result {
-    position: fixed;
-    top: 50vh;
-    left: 50vw;
-    transform: translate(-50%, -50%);
+.btn-locked {
+    background: grey;
+}
+
+#result-display-container {
     display: flex;
     flex-direction: column;
-    padding: 2rem;
-    border: none;
-    border-radius: 10px;
-    background-color: #FFF;
+    align-items: center;
+}
+#result-text {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+@font-face {
+    font-family: Poppins;
+    src: url('assets/fonts/Poppins/Poppins-Black.ttf');
+    font-weight: 900;
+}
+@font-face {
+    font-family: Poppins;
+    src: url('assets/fonts/Poppins/Poppins-Bold.ttf');
+    font-weight: 700;
+}
+@font-face {
+    font-family: Poppins;
+    src: url('assets/fonts/Poppins/Poppins-Medium.ttf');
+    font-weight: 500;
+}
+@font-face {
+    font-family: Poppins;
+    src: url('assets/fonts/Poppins/Poppins-Regular.ttf');
+    font-weight: 400;
 }

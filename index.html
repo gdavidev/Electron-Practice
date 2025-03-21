@@ -8,27 +8,34 @@
 </head>
 <body>
 <header>
-  <div id="title-container">
-    <h1>QUIZ</h1>
-    <h2 id="question"></h2>
-  </div>
   <div id="score-container">
-    <span id="score">0</span>
+    Score: <span id="score">0</span>
+  </div>
+  <div id="progress-container">
+    <span id="progress">0</span>
     <span>/</span>
-    <span id="max-score">0</span>
+    <span id="max-progress">0</span>
   </div>
 </header>
 <main>
-  <div id="alternatives-container">
-    <button class="alternative-btn btn-red"></button>
-    <button class="alternative-btn btn-blue"></button>
-    <button class="alternative-btn btn-green"></button>
-    <button class="alternative-btn btn-yellow"></button>
+  <section id="question-container">
+    <span id="question-text"></span>
+    <div id="result-display-container">
+      <span id="result-text"></span>
+      <div>
+        Score: + <span id="result-score-text"></span>
+      </div>
+    </div>
+  </section>
+  <div id="time-bar-container">
+    <div id="time-bar"></div>
   </div>
-  <dialog id="dialog-result">
-    <span id="result-message"></span>
-    <button id="next-button">Próxima</button>
-  </dialog>
+  <section id="alternatives-container">
+    <button class="alternative-btn btn-blue"></button>
+    <button class="alternative-btn btn-red"></button>
+    <button class="alternative-btn btn-yellow"></button>
+    <button class="alternative-btn btn-green"></button>
+  </section>
 </main>
 <script type="module" src="renderer.js"></script>
 </body>
