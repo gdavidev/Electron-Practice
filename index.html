@@ -13,27 +13,32 @@
     <div id="score-container">
       Score: <span id="score">0</span>
     </div>
-    <div id="progress-container">
-      <span id="progress">0</span>
+    <div id="current-question-container">
+      <span id="current-question">0</span>
       <span>/</span>
-      <span id="max-progress">0</span>
+      <span id="question-amount">0</span>
     </div>
   </div>
 </header>
 
 <main>
-  <section id="question-container">
-    <span id="question-text"></span>
+  <section id="main-view-container">
+    <span id="question-text">
+    </span>
+    
+    <span id="countdown-text">
+    </span>
+    
     <div id="result-display-container">
       <span id="result-text"></span>
-      <div>
-        Score: + <span id="result-score-text"></span>
-      </div>
+      <div>Score: + <span id="result-score-text"></span></div>
     </div>
   </section>
+  
   <div id="time-bar-container">
     <div id="time-bar"></div>
   </div>
+  
   <section id="alternatives-container">
     <button class="alternative-btn btn-blue"></button>
     <button class="alternative-btn btn-red"></button>
@@ -41,6 +46,15 @@
     <button class="alternative-btn btn-green"></button>
   </section>
 </main>
+
+<section id="main-menu-container">
+  <h1>Animal - Quiz</h1>
+  
+  <div>
+    <button id="start-game-btn" class="btn-blue">Start Game</button>
+    <button id="exit-game-btn" class="btn-blue">Exit</button>
+  </div>
+</section>
 
 <dialog id="final-result-dialog">
   <div id="final-result-dialog-content">

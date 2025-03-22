@@ -2,7 +2,8 @@
 ## Contributing
 After cloning the project you must run the following:
 ```bash
-npm i # Install Node Dependencies and electron
+npm i # Install Node Dependencies
+npm i --save-dev electron # Install electron
 electron . # Initialize project 
 ```
 On the file ``renderer.js`` there is a ``PageContent`` class that controls

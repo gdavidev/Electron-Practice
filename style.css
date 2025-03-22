@@ -24,6 +24,39 @@ header {
     font-weight: 700;
 }
 
+#main-menu-container {
+    position: fixed;
+    width: 100vw;
+    min-height: 100vh;
+    max-width:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+    background: #fff1e8;
+
+    transform: translateY(0);
+    transition: transform 0.5s ease-in-out;
+}
+#main-menu-container.hidden {
+    transform: translateY(-100vh)
+}
+
+#main-menu-container h1 {
+    font-size: 4rem;
+}
+
+#main-menu-container #start-game-btn,
+#main-menu-container #exit-game-btn {
+    font-size: 2rem;
+    border: none;
+    border-radius: 15px;
+    background: #1369ce;
+    color: #fff;
+    padding: 1rem 2rem;
+}
+
 #header-content-container {
     margin: 0 auto;
     display: flex;
@@ -43,14 +76,14 @@ main {
     display: flex;
     flex-direction: column;
 }
-main #question-container {
+main #main-view-container {
     flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     background: #fff;
 }
-main #question-container #question-text {
+main #main-view-container #question-text {
     color: #140f29;
     font-weight: 900;
     font-size: 2rem;
@@ -91,6 +124,7 @@ main #time-bar {
     font-family: "Arial Black";
     color: white;
     box-shadow: #140f29AA 3px 3px 3px;
+    min-height: calc(1.4em + 60px);
 }
 .btn-blue {
     background: #1369ce
@@ -151,6 +185,11 @@ main #time-bar {
     border-radius: 10px;
     color: white;
     font-weight: bold;
+}
+
+#countdown-text {
+    font-size: 3rem;
+    font-weight: 700;
 }
 
 @font-face {
