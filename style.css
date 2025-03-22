@@ -1,5 +1,7 @@
 :root {
     --max-screen-width: 1200px;
+    --time-per-question-ms: 5000ms;
+    --time-on-results-view-ms: 1500ms;
 }
 
 * {
@@ -112,6 +114,17 @@ main #time-bar {
     background: green;
     width: 100%;
     height: 100%;
+
+    transition:
+        background var(--time-per-question-ms) ease-in-out,
+        width var(--time-per-question-ms) ease-in-out;
+}
+main #time-bar.running {
+    background: red;
+    width: 0;
+}
+main #time-bar.returning {
+    transition-duration: var(--time-on-results-view-ms);
 }
 
 .alternative-btn {

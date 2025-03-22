@@ -10,13 +10,21 @@ class PageContext {
       scoreMultiplier: 10,
       timePerQuestionMs: 5000,
       timeOnResultsViewMs: 1500,
-      numOfQuestions: 2,
-      countDownDurationSec: 3
+      numOfQuestions: 5,
+      countDownDurationSec: 3,
+      goToMenuOnInactivityInResultScreenInSec: 15
     };
     this.state = {
       score: 0,
       currentQuestion: 0,
     };
+    
+    document.documentElement.style.setProperty(
+        '--time-per-question-ms',
+        `${this.configuration.timePerQuestionMs}ms`);
+    document.documentElement.style.setProperty(
+        '--time-on-results-view-ms',
+        `${this.configuration.timeOnResultsViewMs}ms`);
     
     this.currentState = 'main-menu';
     this.states = {

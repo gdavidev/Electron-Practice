@@ -5,6 +5,8 @@ export default class ShowResultsGameState {
     this.finalResultScoreElement = document.getElementById('final-result-score-text');
     this.tryAgainButtonElement = document.getElementById('try-again-button');
     
+    this.autoQuitTimeoutRef = null;
+    this.requestGameState = requestGameState;
     this.configuration = configuration;
     this.state = state;
     
@@ -28,9 +30,16 @@ export default class ShowResultsGameState {
     
     this.finalResultDialogElement.style.display = 'block';
     this.finalResultScoreElement.textContent = String(this.state.score);
+    
+    this.autoQuitTimeoutRef = setTimeout(() => {
+      this.requestGameState('main-menu');
+    }, this.configuration.goToMenuOnInactivityInResultScreenInSec * 1000)
   }
   
   exit(to) {
     this.finalResultDialogElement.style.display = 'none';
+    
+    clearTimeout(this.autoQuitTimeoutRef)
+    this.autoQuitTimeoutRef = null
   }
 }

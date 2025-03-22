@@ -10,7 +10,6 @@ export default class QuestionsGameState {
     
     this.configuration = configuration;
     this.questionAmountElement.textContent = String(this.configuration.numOfQuestions);
-    this.state = state;
     
     this.states = {
       'question': new QuestionDisplaySubGameState(this.requestQuestionsGameState, configuration, state, questionsDb),

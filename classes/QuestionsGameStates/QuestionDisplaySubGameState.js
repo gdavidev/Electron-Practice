@@ -16,7 +16,6 @@ export default class QuestionDisplaySubGameState {
     this.timeOutRef = null;
     this.questionTextElement.style.display = 'none'
     
-    this.timeBarAnimation = this.#createTimeBarAnimation();
     this.#pauseTimer();
   }
   
@@ -84,8 +83,8 @@ export default class QuestionDisplaySubGameState {
   
   #startTimer() {
     this.timeWhenStarted = Date.now();
-    this.timeBarAnimation.finish()
-    this.timeBarAnimation.play()
+    this.timeBarElement.classList.add('running');
+    this.timeBarElement.classList.remove('returning');
     
     clearTimeout(this.timeOutRef)
     this.timeOutRef = setTimeout(() => {
@@ -95,7 +94,8 @@ export default class QuestionDisplaySubGameState {
   
   #pauseTimer() {
     clearTimeout(this.timeOutRef);
-    this.timeBarAnimation.pause();
+    this.timeBarElement.classList.remove('running');
+    this.timeBarElement.classList.add('returning');
   }
   
   #setAlternativesLocked(isLocked) {
@@ -110,20 +110,8 @@ export default class QuestionDisplaySubGameState {
   }
   
   #shuffleQuestions() {
-    const questionsDb = this.questionsDb.slice();
-    
-    this.questions = questionsDb.slice(0, this.configuration.numOfQuestions);
-    this.questions = shuffle(this.questions);
-    
+    this.questions = shuffle(this.questionsDb);
+    this.questions = this.questions.slice(0, this.configuration.numOfQuestions);
     this.questions.forEach(d => { d.alternatives = shuffle(d.alternatives) });
-  }
-  
-  #createTimeBarAnimation() {
-    return this.timeBarElement.animate([
-      { 'background': 'green', 'width': '100%', },
-      { 'background': 'red', 'width': '0%', }
-    ], {
-      duration: this.configuration.timePerQuestionMs,
-    })
   }
 }
