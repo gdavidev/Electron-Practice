@@ -7,7 +7,7 @@ const createWindow = () => {
     width: 1200,
     height: 900,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, './src/preload.js'),
       contextIsolation: true,
       nodeIntegration: false,
     }
@@ -22,7 +22,7 @@ const createWindow = () => {
   });
   
   //win.removeMenu();
-  win.loadFile('index.html')
+  win.loadFile('dist/index.html')
       .then(() => { win.webContents.send('json-data', jsonData.data) })
       .then(() => { win.show() });
 }

@@ -1,6 +1,6 @@
-import QuestionDisplaySubGameState from "./QuestionsGameStates/QuestionDisplaySubGameState.js";
-import ScoreDisplaySubGameState from "./QuestionsGameStates/ScoreDisplaySubGameState.js";
-import CounterDisplaySubGameState from "./QuestionsGameStates/CountDownDisplaySubGameState.js";
+import QuestionDisplaySubGameState from "@classes/GameStates/QuestionsGameStates/QuestionDisplaySubGameState.js";
+import ScoreDisplaySubGameState from "@classes/GameStates/QuestionsGameStates/ScoreDisplaySubGameState.js";
+import CounterDisplaySubGameState from "@classes/GameStates/QuestionsGameStates/CountDownDisplaySubGameState.js";
 
 export default class QuestionsGameState {
   constructor(requestGameState, configuration, state, questionsDb) {

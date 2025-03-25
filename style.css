@@ -26,6 +26,7 @@ header {
     font-weight: 700;
 }
 
+#form-container,
 #main-menu-container {
     position: fixed;
     width: 100vw;
@@ -41,8 +42,14 @@ header {
     transform: translateY(0);
     transition: transform 0.5s ease-in-out;
 }
+#form-container.hidden ,
 #main-menu-container.hidden {
     transform: translateY(-100vh)
+}
+
+#form-container.returning {
+    transform: translateY(0);
+    transition: transform 0s ease-in-out;
 }
 
 #main-menu-container h1 {
@@ -103,6 +110,11 @@ main #alternatives-container {
     max-width: var(--max-screen-width);
     width: 100%;
     margin: 0 auto;
+}
+
+.simple-keyboard {
+    margin: 0 auto;
+    max-width: var(--max-screen-width);
 }
 
 main #time-bar-container {

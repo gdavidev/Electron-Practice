@@ -8,7 +8,7 @@ export default class MainMenuGameState {
     this.state = state;
     
     this.exitGameButton.onclick = () => window.close();
-    this.startGameButton.onclick = () => { requestGameState('questions') }
+    this.startGameButton.onclick = () => requestGameState('form');
   }
   
   enter(from) {

@@ -1,6 +1,9 @@
-import MainMenuGameState from './classes/MainMenuGameState.js';
-import QuestionsGameState from './classes/QuestionsGameState.js';
-import ShowResultsGameState from "./classes/ShowResultsGameState.js";
+import MainMenuGameState from '@classes/GameStates/MainMenuGameState.js';
+import QuestionsGameState from '@classes/GameStates/QuestionsGameState.js';
+import ShowResultsGameState from "@classes/GameStates/ShowResultsGameState.js";
+import Keyboard from '@classes/Keyboard.js';
+import 'simple-keyboard/build/css/index.css';
+import FormGameState from "@classes/GameStates/FormGameState";
 
 class PageContext {
   constructor(data) {
@@ -31,6 +34,7 @@ class PageContext {
       'main-menu': new MainMenuGameState(this.requestGameState, this.state),
       'questions': new QuestionsGameState(this.requestGameState, this.configuration, this.state, data),
       'show-results': new ShowResultsGameState(this.requestGameState, this.configuration, this.state),
+      'form': new FormGameState(this.requestGameState, this.configuration, this.state),
     };
     this.states['main-menu'].enter('');
   }
@@ -43,10 +47,21 @@ class PageContext {
     this.currentState = gameState;
   }
 }
-let pageContent;
 
 // Initialize page trigger
 window.bridge.onJsonData((event, data) => {
-  pageContent = new PageContext(data);
+  if (!window.pageContent) {
+    window.pageContent = new PageContext(data);
+  }
 });
 
+if (!window.emailKeyboard) { // Global guard
+  window.emailKeyboard = Keyboard.alphanumeric(
+      'alphanumeric-keyboard',
+      input => { document.getElementById('email-input').value = input });
+}
+if (!window.numericKeyboard) { // Global guard
+  window.numericKeyboard = Keyboard.numeric(
+      'numeric-keyboard',
+      input => { document.getElementById('phone-input').value = input });
+}

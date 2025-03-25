@@ -1,4 +1,4 @@
-import {shuffle} from "../../libs/ArrayUtilities.js";
+import {shuffle} from "@libs/ArrayUtilities.js";
 
 export default class QuestionDisplaySubGameState {
   constructor(requestQuestionsGameState, configuration, state, questionsDb) {

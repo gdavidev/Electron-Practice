@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../style.css">
   <title>Hello World!</title>
 </head>
 <body>
@@ -45,7 +45,19 @@
     <button class="alternative-btn btn-yellow"></button>
     <button class="alternative-btn btn-green"></button>
   </section>
+  
 </main>
+
+<section id="form-container">
+  <input id="email-input" type="text" placeholder="Seu e-mail">
+  <input id="phone-input" type="text" placeholder="Seu telefone">
+  
+  <input id="submit-btn" type="button" value="Confirmar">
+  <input id="cancel-btn" type="button" value="Cancelar">
+  
+  <div class="simple-keyboard alphanumeric-keyboard"></div>
+  <div class="simple-keyboard numeric-keyboard"></div>
+</section>
 
 <section id="main-menu-container">
   <h1>Animal - Quiz</h1>
@@ -68,6 +80,6 @@
   </div>
 </dialog>
 
-<script type="module" src="renderer.js"></script>
+<script src="./bundle.js"></script>
 </body>
 </html>
