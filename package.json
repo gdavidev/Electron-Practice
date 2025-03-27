@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack --watch & electron ."
+    "dev": "webpack --watch --mode development"
   },
   "author": "",
   "license": "ISC",
@@ -21,6 +21,7 @@
     "webpack-dev-server": "^5.2.0"
   },
   "dependencies": {
-    "simple-keyboard": "^3.8.43"
+    "simple-keyboard": "^3.8.43",
+    "sqlite3": "^5.1.7"
   }
 }

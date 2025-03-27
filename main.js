@@ -1,6 +1,9 @@
-const { app, BrowserWindow } = require('electron')
-const fs = require('fs');
+const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('node:path')
+const DataAccess = require("./src/data-access/DataAccess.js");
+
+const db = new DataAccess(app.getPath('userData'))
+db.ensureCreated();
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -8,22 +11,27 @@ const createWindow = () => {
     height: 900,
     webPreferences: {
       preload: path.join(__dirname, './src/preload.js'),
+      contextBridge: true,
       contextIsolation: true,
       nodeIntegration: false,
     }
   });
-  
-  let jsonData
-  const jsonPath = path.join(__dirname, './assets/data/questions.json');
-  fs.readFile(jsonPath, 'utf-8', (err, data) => {
-    if (err)
-      return console.error('Error reading the JSON file:', err);
-    jsonData = JSON.parse(data);
+
+  ipcMain.handle('save-player', async (_, email, phone) => {
+    return await db.playerRepository.save(email, phone);
   });
-  
+  ipcMain.handle('get-players', async () => {
+    return await db.playerRepository.get();
+  });
+  ipcMain.handle('save-question', async (_, question) => {
+    return await db.questionRepository.save(question);
+  });
+  ipcMain.handle('get-questions', async () => {
+    return await db.questionRepository.get();
+  });
+
   //win.removeMenu();
   win.loadFile('dist/index.html')
-      .then(() => { win.webContents.send('json-data', jsonData.data) })
       .then(() => { win.show() });
 }
 

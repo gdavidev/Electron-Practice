@@ -6,7 +6,7 @@ import 'simple-keyboard/build/css/index.css';
 import FormGameState from "@classes/GameStates/FormGameState";
 
 class PageContext {
-  constructor(data) {
+  constructor(questions) {
     this.requestGameState = this.requestGameState.bind(this);
     
     this.configuration = {
@@ -32,7 +32,7 @@ class PageContext {
     this.currentState = 'main-menu';
     this.states = {
       'main-menu': new MainMenuGameState(this.requestGameState, this.state),
-      'questions': new QuestionsGameState(this.requestGameState, this.configuration, this.state, data),
+      'questions': new QuestionsGameState(this.requestGameState, this.configuration, this.state, questions),
       'show-results': new ShowResultsGameState(this.requestGameState, this.configuration, this.state),
       'form': new FormGameState(this.requestGameState, this.configuration, this.state),
     };
@@ -49,9 +49,10 @@ class PageContext {
 }
 
 // Initialize page trigger
-window.bridge.onJsonData((event, data) => {
+document.addEventListener('DOMContentLoaded', async () => {
   if (!window.pageContent) {
-    window.pageContent = new PageContext(data);
+    const questions = await window.bridge.getQuestions();
+    window.pageContent = new PageContext(questions);
   }
 });
 
