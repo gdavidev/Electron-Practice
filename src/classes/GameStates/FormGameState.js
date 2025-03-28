@@ -32,6 +32,7 @@ export default class FormGameState {
     if (to !== 'main-menu') {
       this.#hideForm();
     }
+    this.submitButton.onclick = undefined;
   }
   
   #hideForm() {

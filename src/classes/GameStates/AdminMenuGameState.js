@@ -61,7 +61,7 @@ export default class AdminMenuGameState {
     async #exportPlayersInfoToCSV() {
         const players = await window.bridge.players.get();
         console.log(players)
-        let csvContent = "email,phone\n" + players.map(p => `${p.email},${p.phone}`).join("\n");
+        let csvContent = "email;phone\n" + players.map(p => `${p.email};${p.phone}`).join("\n");
 
         const blob = new Blob([csvContent], { type: "text/csv" });
         const a = document.createElement("a");

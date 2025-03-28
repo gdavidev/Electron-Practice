@@ -14,22 +14,23 @@ class PageContext {
     this.requestGameState = this.requestGameState.bind(this);
     this.updateQuestions = this.updateQuestions.bind(this);
     this.updateConfiguration = this.updateConfiguration.bind(this);
-
+    
+    this.state = {
+      score: 0,
+      currentQuestion: 0,
+    };
+    
     Promise.all([
       this.updateQuestions(),
       this.updateConfiguration(),
     ]).then(() => {
-      this.state = {
-        score: 0,
-        currentQuestion: 0,
-      };
-
       this.#initializeStates()
-    })
+      this.currentState = 'main-menu';
+      this.states['main-menu'].enter('');
+    });
   }
 
   #initializeStates() {
-    this.currentState = 'main-menu';
     this.states = {
       'main-menu': new MainMenuGameState(this.requestGameState, this.state),
       'questions': new QuestionsGameState(this.requestGameState, configuration, this.state, questions),
@@ -44,7 +45,6 @@ class PageContext {
         })
       }),
     };
-    this.states['main-menu'].enter('');
   }
   
   requestGameState(gameState) {
