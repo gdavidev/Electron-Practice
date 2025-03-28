@@ -4,6 +4,7 @@ After cloning the project you must run the following:
 ```bash
 npm i # Install Node Dependencies
 npm i --save-dev electron # Install electron
+npm run dev # Initialize webpack in development mode
 electron . # Initialize project 
 ```
 On the file ``renderer.js`` there is a ``PageContent`` class that controls
