@@ -17,7 +17,8 @@ class PlayerRepository {
     get() {
         return new Promise((resolve, reject) => {
             this.db.all("SELECT * FROM players", (err, rows) => {
-                if (err) return reject(err);
+                if (err)
+                    return reject(err);
                 resolve(rows);
             });
         });

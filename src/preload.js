@@ -2,16 +2,17 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 // Expose specific APIs to the renderer process
 contextBridge.exposeInMainWorld('bridge', {
-  savePlayer: (email, phone) => {
-    return ipcRenderer.invoke('save-player', email, phone)
+  players: {
+    save: (email, phone) =>  ipcRenderer.invoke('save-player', email, phone),
+    get: () =>  ipcRenderer.invoke('get-players'),
   },
-  getPlayers: () => {
-    return ipcRenderer.invoke('get-players')
+  questions: {
+    save: (question) =>  ipcRenderer.invoke('save-question', question),
+    get: () =>  ipcRenderer.invoke('get-questions'),
+    erase: () =>  ipcRenderer.invoke('erase-questions'),
   },
-  saveQuestion: (question) => {
-    return ipcRenderer.invoke('save-question', question)
-  },
-  getQuestions: () => {
-    return ipcRenderer.invoke('get-questions')
-  },
+  configuration: {
+    update: (configurationItem) =>  ipcRenderer.invoke('save-configuration', configurationItem),
+    get: () =>  ipcRenderer.invoke('get-configurations'),
+  }
 });

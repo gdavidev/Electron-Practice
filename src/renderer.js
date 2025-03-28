@@ -4,37 +4,45 @@ import ShowResultsGameState from "@classes/GameStates/ShowResultsGameState.js";
 import Keyboard from '@classes/Keyboard.js';
 import 'simple-keyboard/build/css/index.css';
 import FormGameState from "@classes/GameStates/FormGameState";
+import AdminMenuGameState from "@classes/GameStates/AdminMenuGameState";
+
+let questions = []
+let configuration = new Map()
 
 class PageContext {
-  constructor(questions) {
+  constructor() {
     this.requestGameState = this.requestGameState.bind(this);
-    
-    this.configuration = {
-      scoreMultiplier: 10,
-      timePerQuestionMs: 5000,
-      timeOnResultsViewMs: 1500,
-      numOfQuestions: 5,
-      countDownDurationSec: 3,
-      goToMenuOnInactivityInResultScreenInSec: 15
-    };
-    this.state = {
-      score: 0,
-      currentQuestion: 0,
-    };
-    
-    document.documentElement.style.setProperty(
-        '--time-per-question-ms',
-        `${this.configuration.timePerQuestionMs}ms`);
-    document.documentElement.style.setProperty(
-        '--time-on-results-view-ms',
-        `${this.configuration.timeOnResultsViewMs}ms`);
-    
+    this.updateQuestions = this.updateQuestions.bind(this);
+    this.updateConfiguration = this.updateConfiguration.bind(this);
+
+    Promise.all([
+      this.updateQuestions(),
+      this.updateConfiguration(),
+    ]).then(() => {
+      this.state = {
+        score: 0,
+        currentQuestion: 0,
+      };
+
+      this.#initializeStates()
+    })
+  }
+
+  #initializeStates() {
     this.currentState = 'main-menu';
     this.states = {
       'main-menu': new MainMenuGameState(this.requestGameState, this.state),
-      'questions': new QuestionsGameState(this.requestGameState, this.configuration, this.state, questions),
-      'show-results': new ShowResultsGameState(this.requestGameState, this.configuration, this.state),
-      'form': new FormGameState(this.requestGameState, this.configuration, this.state),
+      'questions': new QuestionsGameState(this.requestGameState, configuration, this.state, questions),
+      'show-results': new ShowResultsGameState(this.requestGameState, configuration, this.state),
+      'form': new FormGameState(this.requestGameState, configuration, this.state),
+      'admin': new AdminMenuGameState(this.requestGameState, async () => {
+        Promise.all([
+          this.updateQuestions(),
+          this.updateConfiguration(),
+        ]).then(() => {
+          this.#initializeStates()
+        })
+      }),
     };
     this.states['main-menu'].enter('');
   }
@@ -46,13 +54,38 @@ class PageContext {
     this.states[gameState].enter(this.currentState);
     this.currentState = gameState;
   }
+
+  async updateQuestions() {
+    questions = await window.bridge.questions.get();
+  }
+
+  async updateConfiguration() {
+    const rawConfigs = await window.bridge.configuration.get()
+    rawConfigs.forEach((config) => {
+      configuration.set(
+          config.propertyName,
+          !isNaN(parseFloat(config.value)) ? Number(config.value) : config.value);
+    })
+
+    configuration.set("numOfQuestions",
+        configuration.get("numOfQuestions") > questions.length ?
+            questions.length :
+            configuration.get("numOfQuestions")
+    )
+
+    document.documentElement.style.setProperty(
+        '--time-per-question-ms',
+        `${configuration.get('timePerQuestionMs')}ms`);
+    document.documentElement.style.setProperty(
+        '--time-on-results-view-ms',
+        `${configuration.get('timeOnResultsViewMs')}ms`);
+  }
 }
 
 // Initialize page trigger
 document.addEventListener('DOMContentLoaded', async () => {
   if (!window.pageContent) {
-    const questions = await window.bridge.getQuestions();
-    window.pageContent = new PageContext(questions);
+    window.pageContent = new PageContext();
   }
 });
 

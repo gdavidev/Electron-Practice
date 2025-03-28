@@ -14,7 +14,7 @@ export default class ShowResultsGameState {
   }
   
   enter(from) {
-    const maxScore = this.configuration.timePerQuestionMs * this.configuration.scoreMultiplier;
+    const maxScore = this.configuration.get('timePerQuestionMs') * this.configuration.get('scoreMultiplier');
     const scoreRatio = this.state.score / maxScore;
     
     if (scoreRatio >= 0.7) {
@@ -33,7 +33,7 @@ export default class ShowResultsGameState {
     
     this.autoQuitTimeoutRef = setTimeout(() => {
       this.requestGameState('main-menu');
-    }, this.configuration.goToMenuOnInactivityInResultScreenInSec * 1000)
+    }, this.configuration.get('goToMenuOnInactivityInResultScreenInSec') * 1000)
   }
   
   exit(to) {

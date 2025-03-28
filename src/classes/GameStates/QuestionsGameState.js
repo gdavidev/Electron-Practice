@@ -7,10 +7,12 @@ export default class QuestionsGameState {
     this.requestQuestionsGameState = this.requestQuestionsGameState.bind(this);
     
     this.questionAmountElement = document.getElementById('question-amount');
-    
+    this.currentQuestionElement = document.getElementById('current-question');
+
     this.configuration = configuration;
-    this.questionAmountElement.textContent = String(this.configuration.numOfQuestions);
-    
+    this.questionAmountElement.textContent = String(this.configuration.get('numOfQuestions'));
+    this.currentQuestionElement.textContent = '0';
+
     this.states = {
       'question': new QuestionDisplaySubGameState(this.requestQuestionsGameState, configuration, state, questionsDb),
       'result': new ScoreDisplaySubGameState(this.requestQuestionsGameState, configuration, state),
@@ -22,15 +24,17 @@ export default class QuestionsGameState {
   enter(from) {
     this.currentState = 'countdown';
     this.states[this.currentState].enter(from);
+    this.currentQuestionElement.textContent = '0';
   }
   
   exit(to) {}
   
   requestQuestionsGameState(gameState, data) {
     console.log('questions: ' + this.currentState + ' -> ' + gameState);
-    
+
     this.states[this.currentState].exit(gameState);
     this.states[gameState].enter(this.currentState, data);
+
     this.currentState = gameState;
   }
 }

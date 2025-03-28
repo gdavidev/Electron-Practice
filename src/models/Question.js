@@ -1,6 +1,6 @@
-export default class Question {
-    constructor(title, text, alternative1, alternative2, alternative3, alternative4, answer) {
-        this.title = title
+class Question {
+    constructor(id, text, alternative1, alternative2, alternative3, alternative4, answer) {
+        this.id = id;
         this.text = text
         this.alternative1 = alternative1
         this.alternative2 = alternative2
@@ -9,3 +9,4 @@ export default class Question {
         this.answer = answer
     }
 }
+module.exports = Question;

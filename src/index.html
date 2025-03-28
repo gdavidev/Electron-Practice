@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="./../src/css/fonts.css">
+  <link rel="stylesheet" href="./../src/css/style.css">
+  <link rel="stylesheet" href="./../src/css/forms.css">
   <title>Hello World!</title>
 </head>
 <body>
@@ -49,14 +51,59 @@
 </main>
 
 <section id="form-container">
-  <input id="email-input" type="text" placeholder="Seu e-mail">
-  <input id="phone-input" type="text" placeholder="Seu telefone">
-  
-  <input id="submit-btn" type="button" value="Confirmar">
-  <input id="cancel-btn" type="button" value="Cancelar">
-  
-  <div class="simple-keyboard alphanumeric-keyboard"></div>
-  <div class="simple-keyboard numeric-keyboard"></div>
+  <div id="form-content-container">
+    <div>
+      <div class="form-item">
+        <label for="email-input" class="input-label">Email</label>
+        <input id="email-input" class="text-input" type="text" placeholder="Seu e-mail">
+      </div>
+      <div class="form-item">
+        <label for="phone-input" class="input-label">Telefone:</label>
+        <input id="phone-input" class="text-input" type="text" placeholder="Seu telefone">
+      </div>
+    </div>
+
+    <div class="form-row form-container-buttons">
+      <input id="submit-btn" class="btn btn-md btn-blue" type="button" value="Confirmar">
+      <input id="cancel-btn" class="btn btn-md btn-locked" type="button" value="Cancelar">
+    </div>
+  </div>
+
+  <div id="form-keyboards-container">
+    <div class="simple-keyboard alphanumeric-keyboard"></div>
+    <div class="simple-keyboard numeric-keyboard"></div>
+  </div>
+</section>
+
+<section id="admin-container">
+  <div id="admin-menu-container">
+    <button id="admin-questions-btn" class="btn btn-md btn-blue">Perguntas</button>
+    <button id="admin-configuration-btn" class="btn btn-md btn-blue">Configurações</button>
+    <button id="export-players-info-to-csv-btn" class="btn btn-md btn-blue">Exportar Jogadores</button>
+    <button id="admin-exit-btn" class="btn btn-md btn-red">Sair</button>
+  </div>
+
+  <div id="admin-content-container">
+    <section id="admin-questions-container">
+      <h1>Perguntas</h1>
+      <div id="admin-questions-input-container">
+      </div>
+
+      <div class="form-row">
+        <button id="admin-add-question-btn" class="btn btn-md btn-blue">Adicionar</button>
+        <button id="admin-save-questions-btn" class="btn btn-md btn-blue">Salvar</button>
+      </div>
+    </section>
+
+    <section id="admin-configuration-container">
+      <h1>Configurações</h1>
+
+      <div id="admin-configurations-input-container">
+      </div>
+
+      <button id="admin-save-configurations-btn" class="btn btn-md btn-blue">Salvar</button>
+    </section>
+  </div>
 </section>
 
 <section id="main-menu-container">

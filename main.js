@@ -3,7 +3,6 @@ const path = require('node:path')
 const DataAccess = require("./src/data-access/DataAccess.js");
 
 const db = new DataAccess(app.getPath('userData'))
-db.ensureCreated();
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -28,6 +27,15 @@ const createWindow = () => {
   });
   ipcMain.handle('get-questions', async () => {
     return await db.questionRepository.get();
+  });
+  ipcMain.handle('erase-questions', async () => {
+    return await db.questionRepository.erase();
+  });
+  ipcMain.handle('save-configuration', async (_, configuration) => {
+    return await db.configurationRepository.update(configuration);
+  });
+  ipcMain.handle('get-configurations', async () => {
+    return await db.configurationRepository.get();
   });
 
   //win.removeMenu();

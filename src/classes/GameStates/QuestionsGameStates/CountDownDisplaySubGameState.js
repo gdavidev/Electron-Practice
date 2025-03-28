@@ -18,8 +18,8 @@ export default class CounterDisplaySubGameState {
   }
   
   #startCountDown() {
-    let count = this.configuration.countDownDurationSec;
-    
+    let count = this.configuration.get('countDownDurationSec');
+
     this.countDownTextElement.textContent = String(count);
     const intervalRef = setInterval(() => {
       count--;

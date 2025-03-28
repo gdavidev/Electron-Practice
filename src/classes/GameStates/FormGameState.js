@@ -11,14 +11,15 @@ export default class FormGameState {
     this.#showForm();
     this.emailInput.onfocus = () => this.#showAlphanumericKeyboard()
     this.phoneInput.onfocus = () => this.#showNumericKeyboard()
-    
-    this.emailInput.focus();
-    
+
     const emailKeyboardEnterBtn = window.emailKeyboard.getButtonElement('{enter}')
     emailKeyboardEnterBtn.onclick = () => this.#showNumericKeyboard();
     
     this.cancelButton.onclick = () => requestGameState('main-menu');
-    this.submitButton.onclick = () => requestGameState('questions');
+    this.submitButton.onclick = () => {
+      this.#savePlayerInfo();
+      requestGameState('questions');
+    }
   }
   
   enter(from) {
@@ -42,18 +43,27 @@ export default class FormGameState {
     this.formContainer.classList.remove('hidden')
     this.formContainer.classList.add('returning')
   }
-  
+
+  #savePlayerInfo() {
+    const email = String(this.emailInput.value);
+    const phone = String(this.phoneInput.value);
+
+    window.bridge.players.save(email, phone);
+  }
+
   #clearForm() {
     this.emailInput.value = ''
     this.phoneInput.value = ''
   }
   
   #showNumericKeyboard() {
+    this.phoneInput.focus();
     this.alphanumericKeyboard.style.display = 'none'
     this.numericKeyboard.style.display = 'block'
   }
   
   #showAlphanumericKeyboard() {
+    this.emailInput.focus();
     this.alphanumericKeyboard.style.display = 'block'
     this.numericKeyboard.style.display = 'none'
   }

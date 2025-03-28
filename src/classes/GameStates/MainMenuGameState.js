@@ -6,7 +6,8 @@ export default class MainMenuGameState {
     this.scoreElement = document.getElementById('score');
     
     this.state = state;
-    
+    this.requestGameState = requestGameState;
+
     this.exitGameButton.onclick = () => window.close();
     this.startGameButton.onclick = () => requestGameState('form');
   }
@@ -14,10 +15,16 @@ export default class MainMenuGameState {
   enter(from) {
     this.#showMenu();
     this.#resetGame();
+
+    document.onkeydown = (e) => {
+      if (e.key === 'Enter')
+        this.requestGameState('admin')
+    };
   }
   
   exit(to) {
     this.#hideMenu();
+    document.onkeydown = undefined
   }
   
   #showMenu() {

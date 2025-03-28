@@ -33,12 +33,12 @@ export default class ScoreDisplaySubGameState {
     }
     
     setTimeout(() => {
-      if (this.configuration.numOfQuestions <= this.state.currentQuestion + 1) {
+      if (this.configuration.get('numOfQuestions') <= this.state.currentQuestion + 1) {
         this.requestQuestionsGameState('show-results');
       } else {
         this.requestQuestionsGameState('question');
       }
-    }, this.configuration.timeOnResultsViewMs)
+    }, this.configuration.get('timeOnResultsViewMs'))
   }
   
   exit(to) {

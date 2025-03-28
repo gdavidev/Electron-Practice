@@ -44,15 +44,22 @@ export default class QuestionDisplaySubGameState {
   }
   
   #loadQuestion(question) {
-    this.#loadAlternatives(question.alternatives);
-    this.questionTextElement.textContent = question.title;
+    this.#loadAlternatives([
+        question.alternative1,
+        question.alternative2,
+        question.alternative3,
+        question.alternative4,
+    ]);
+    this.questionTextElement.textContent = question.text;
   }
   
   #loadAlternatives(alternatives) {
+    const randomizedAlternatives = shuffle(alternatives);
+
     for (let i = 0; i < this.alternativesButtonsArr.length; i++) {
-      this.alternativesButtonsArr[i].textContent = alternatives[i];
+      this.alternativesButtonsArr[i].textContent = randomizedAlternatives[i]
       this.alternativesButtonsArr[i].onclick = () => {
-        this.#choseAlternative(alternatives[i]);
+        this.#choseAlternative(randomizedAlternatives[i]);
       }
     }
   }
@@ -62,7 +69,8 @@ export default class QuestionDisplaySubGameState {
     
     if (isCorrect) {
       const scoreLostDueToTime = Date.now() - this.timeWhenStarted
-      const scoreGained = (this.configuration.timePerQuestionMs - scoreLostDueToTime) * this.configuration.scoreMultiplier;
+      const scoreGained = (this.configuration.get('timePerQuestionMs') - scoreLostDueToTime)
+          * this.configuration.get('scoreMultiplier');
       
       this.requestQuestionsGameState('result', { reason: 'correct', scoreGained: scoreGained });
     } else {
@@ -72,11 +80,9 @@ export default class QuestionDisplaySubGameState {
   
   #nextQuestion() {
     this.state.currentQuestion++;
-    if (this.state.currentQuestion > this.questions.length - 1) {
-      this.requestQuestionsGameState('result');
-      return;
-    }
-    
+    if (this.state.currentQuestion >= this.questions.length)
+      return this.requestQuestionsGameState('results');
+
     this.currentQuestionElement.textContent = String(this.state.currentQuestion + 1);
     this.#loadQuestion(this.questions[this.state.currentQuestion]);
   }
@@ -89,7 +95,7 @@ export default class QuestionDisplaySubGameState {
     clearTimeout(this.timeOutRef)
     this.timeOutRef = setTimeout(() => {
       this.requestQuestionsGameState('result', { reason: 'time-out', scoreGained: 0 });
-    }, this.configuration.timePerQuestionMs);
+    }, this.configuration.get('timePerQuestionMs'));
   }
   
   #pauseTimer() {
@@ -111,7 +117,6 @@ export default class QuestionDisplaySubGameState {
   
   #shuffleQuestions() {
     this.questions = shuffle(this.questionsDb);
-    this.questions = this.questions.slice(0, this.configuration.numOfQuestions);
-    this.questions.forEach(d => { d.alternatives = shuffle(d.alternatives) });
+    this.questions = this.questions.slice(0, this.configuration.get('numOfQuestions'));
   }
 }
